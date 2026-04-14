@@ -5,7 +5,6 @@ myml
   activation.cpp
   layer.cpp
   loss.cpp
-  nn.cpp
 )
 
 target_include_directories(

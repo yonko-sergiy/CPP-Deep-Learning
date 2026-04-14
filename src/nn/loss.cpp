@@ -1,5 +1,5 @@
 
-#include "loss.h"
+#include "nn/loss.h"
 #include <cmath>
 
 namespace Loss {

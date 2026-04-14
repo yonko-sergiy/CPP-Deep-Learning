@@ -1,74 +1,19 @@
 
-// #include <boost/serialization/vector.hpp>
-// #include <vector>
 #include <fstream>
-
-#include <cmath>
-
-#include "activation.h"
-#include "layer.h"
-#include "loss.h"
-
 #include <iostream>
 
+#include "nn/activation.h"
+#include "nn/layer.h"
+#include "nn/loss.h"
 
-// namespace boost {
-// namespace serialization {
-//
-// // Serialize Eigen::MatrixXd
-// template<class Archive>
-// void serialize(Archive & ar, Eigen::MatrixXd & matrix, const unsigned int version) {
-//     int rows = matrix.rows();
-//     int cols = matrix.cols();
-//
-//     if (Archive::is_saving::value) {
-//         ar & rows;
-//         ar & cols;
-//         // Save data as a vector
-//         std::vector<double> data(matrix.data(), matrix.data() + rows * cols);
-//         ar & data;
-//     } else {
-//         ar & rows;
-//         ar & cols;
-//         std::vector<double> data;
-//         ar & data;
-//         matrix.resize(rows, cols);
-//         std::copy(data.begin(), data.end(), matrix.data());
-//     }
-// }
-//
-// } // namespace serialization
-// } // namespace boost
-
-
-
-
-// #include "nn.hpp"
-
-// Eigen::MatrixXd LossMAE (Eigen::MatrixXd target, Eigen::MatrixXd predict) {
-//   Eigen::MatrixXd difference = (target.array() - predict.array());
-//   return difference.array() / difference.size();
-// }
-
-// Layer CreateLayer(SigmoidLayer, 3, 3, true) {
-//   return shared_pointer
-// };
-// auto my_layer = CreateLayer(SigmoidLayer, 3, 3, true) {
 
 int main (int argc, char *argv[]) {
-  // auto a = Activations::Activation::create();
-  // a = Activations::Sigmoid::create();
-  // Eigen::MatrixXd m = Eigen::MatrixXd::Random(20, 1024);
-  // Eigen::MatrixXd b = Eigen::MatrixXd::Random(20, 4);
-  // Eigen::MatrixXd c = Eigen::MatrixXd::Random(8, 3);
-  // std::shared_ptr<Eigen::MatrixXd> x =
-  //   std::make_shared<Eigen::MatrixXd>(m);  // copy into shared_ptr
-  //
-  //
 
+  // create activation and loss function
   auto sigmoid = Activations::Sigmoid::create();
   auto mae = Loss::MAE::create();
   
+  // Create Model
   auto model = Layers::Sequential({
     Layers::Linear::create(3, 3, sigmoid, true),
     Layers::Linear::create(3, 2, sigmoid, true),
@@ -77,6 +22,8 @@ int main (int argc, char *argv[]) {
 
   Eigen::MatrixXd in = Eigen::MatrixXd::Random(1, 3);
   Eigen::MatrixXd err = Eigen::MatrixXd::Random(1, 3);
+
+  // 
   Eigen::MatrixXd x_input_train(4, 3);
   x_input_train
     <<
@@ -123,12 +70,14 @@ int main (int argc, char *argv[]) {
     }
   }
 
- 
+  // Saving model
   {
     std::ofstream ofs("model.dat");
     boost::archive::text_oarchive oa(ofs);
     oa << model;
   }
+
+  // Loading model
   Layers::Sequential model_loaded;
   {
     std::ifstream ifs("model.dat");

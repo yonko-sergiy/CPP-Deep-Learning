@@ -1,7 +1,7 @@
 
 #include <boost/serialization/export.hpp>
 
-#include "activation.h"
+#include "nn/activation.h"
 
 
 BOOST_CLASS_EXPORT(Activations::Sigmoid)

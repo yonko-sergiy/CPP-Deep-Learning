@@ -1,7 +1,7 @@
 
 #include <boost/serialization/export.hpp>
 
-#include "layer.h"
+#include "nn/layer.h"
 
 
 BOOST_CLASS_EXPORT(Layers::Linear)
