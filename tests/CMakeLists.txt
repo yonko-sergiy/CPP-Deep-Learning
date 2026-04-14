@@ -1,17 +1,21 @@
 
 
+
 add_executable(
-my_tests
+tests
   test_main.cpp
 )
 
 target_link_libraries(
-my_tests
+tests
 PRIVATE
   myml
+  gtest
   # Eigen3::Eigen
 )
 
-target_include_directories(my_tests PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR})
+add_test(NAME Tests COMMAND tests)
 
-add_test(NAME myTests COMMAND my_tests)
+add_subdirectory(nn)
+
