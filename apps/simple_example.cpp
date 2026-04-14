@@ -7,6 +7,8 @@
 #include "nn/loss.h"
 
 
+using namespace NN;
+
 int main (int argc, char *argv[]) {
 
   // create activation and loss function

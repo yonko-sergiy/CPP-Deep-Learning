@@ -2,6 +2,7 @@
 #include "nn/loss.h"
 #include <cmath>
 
+namespace NN {
 namespace Loss {
 
 // Loss -- base class
@@ -45,3 +46,4 @@ std::shared_ptr<RMSE> RMSE::create() {
 // end RMSE
 
 } // namespace Loss
+} // namespace NN

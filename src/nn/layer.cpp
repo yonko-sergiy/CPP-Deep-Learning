@@ -4,8 +4,9 @@
 #include "nn/layer.h"
 
 
-BOOST_CLASS_EXPORT(Layers::Linear)
+BOOST_CLASS_EXPORT(NN::Layers::Linear)
 
+namespace NN {
 namespace Layers {
 
 // Layer -- base class
@@ -130,4 +131,5 @@ Eigen::MatrixXd Sequential::getResult() {
 }
 // end Sequential
 
-} // Layers end
+} // namespace Layers
+} // namespace NN

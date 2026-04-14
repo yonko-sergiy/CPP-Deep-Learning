@@ -4,8 +4,9 @@
 #include "nn/activation.h"
 
 
-BOOST_CLASS_EXPORT(Activations::Sigmoid)
+BOOST_CLASS_EXPORT(NN::Activations::Sigmoid)
 
+namespace NN {
 namespace Activations {
 
 // Activation -- base class
@@ -39,4 +40,5 @@ Sigmoid::gradient(Eigen::MatrixXd X) const {
 };
 // end Sigmoid
 
-}; // namespace Activations
+} // namespace Activations
+} // namespace NN

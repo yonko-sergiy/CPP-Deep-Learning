@@ -7,6 +7,7 @@
 #include "serialization.h"
 
 
+namespace NN {
 namespace Layers {
 
 // Layer -- base class
@@ -117,3 +118,4 @@ private:
 }; // end Sequential
 
 } // namespace Layers
+} // namespace NN

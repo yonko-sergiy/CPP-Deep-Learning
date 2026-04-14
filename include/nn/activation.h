@@ -7,6 +7,7 @@
 #include "serialization.h"
 
 
+namespace NN {
 namespace Activations {
 
 // Activation -- base class
@@ -40,4 +41,4 @@ private:
 }; // end Sigmoid
 
 } // namespace Activations
-
+} // namespace NN

@@ -2,6 +2,7 @@
 #include <Eigen/Dense>
 
 
+namespace NN {
 namespace Loss {
 
 // Loss -- base class
@@ -34,3 +35,4 @@ public:
 }; // end RMSE
 
 } // namespace Loss
+} // namespace NN
