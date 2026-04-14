@@ -1,9 +1,9 @@
 
-add_executable(example example.cpp)
+add_executable(simple_example simple_example.cpp)
 # add_executable(example2 example2.cpp)
 
 target_link_libraries(
-example
+simple_example
 PRIVATE
   myml
   # Eigen3::Eigen
