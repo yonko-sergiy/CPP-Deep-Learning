@@ -14,6 +14,7 @@ set(CMAKE_SUPPRESS_REGENERATION true)
 # Знайти бібліотеку Eigen3 у системі
 find_package (Eigen3 REQUIRED NO_MODULE)
 find_package(Boost REQUIRED COMPONENTS serialization)
+find_package(GTest)
 
 include(CTest)
 
@@ -28,29 +29,4 @@ if(BUILD_TESTS)
   add_subdirectory(tests)
 endif()
 
-# Декларувати виконувальний файл
-# add_executable(
-# ${PROJECT_NAME}
-#   src/main.cpp
-#   src/nn.cpp
-#   src/activation.cpp
-#   src/layer.cpp
-# )
 
-
-
-#   Додати директорію include
-# для заголовкових файлів
-# include_directories(include)
-
-# Підключення Eigen3 до проєкту
-# target_link_libraries(
-# ${PROJECT_NAME}
-# PRIVATE
-#   Eigen3::Eigen
-# )
-
-
-# enable_testing()
-#
-# add_subdirectory(tests)
