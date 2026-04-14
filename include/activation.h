@@ -4,20 +4,12 @@
 #include <memory>
 #include <Eigen/Dense>
 
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/serialization/shared_ptr.hpp>
-#include <boost/serialization/serialization.hpp>
-#include <boost/serialization/export.hpp>
-#include <boost/serialization/base_object.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/serialization/nvp.hpp>
+#include "serialization.h"
 
-#include <iostream>
 
 namespace Activations {
 
-// #Activation
+// Activation -- base class
 class Activation {
 public:
   virtual Eigen::MatrixXd function(Eigen::MatrixXd X) const;
@@ -28,10 +20,9 @@ private:
   friend class boost::serialization::access;
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version) {};
-}; // #Activation end
+}; // end Activation -- base class
 
 
-// #Sigmoid
 class Sigmoid : public Activation {
 public:
 
@@ -46,9 +37,7 @@ private:
   void serialize(Archive & ar, const unsigned int version) {
     ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Activation);
   };
+}; // end Sigmoid
 
-}; // #Sigmoid end
-
-
-} // end Activations
+} // namespace Activations
 

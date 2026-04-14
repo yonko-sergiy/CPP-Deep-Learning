@@ -1,22 +1,22 @@
 
+#include <boost/serialization/export.hpp>
 
 #include "layer.h"
 
-#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT(Layers::Linear)
 
 namespace Layers {
 
+// Layer -- base class
 void Layer::setInput(Eigen::MatrixXd input) { this->input = input; }
 void Layer::setDelta(Eigen::MatrixXd delta) { this->delta = delta; }
 
 void Layer::bindNextLayer(std::shared_ptr<Layer> layer) { this->nextLayer = layer; }
-
-//*std::shared_ptr<Layer>
-// Layer::create() { return std::make_shared<Layer>(); };
+// end Layer -- base class
 
 
+// Linear
 Linear::Linear() {}
 Linear::Linear(
   int input,
@@ -30,14 +30,7 @@ Linear::Linear(
     this->bias = bias;
   }
 }
-//
-//   this->input = Eigen::MatrixXd::Random(1, input);
-//   this->linearOutput = Eigen::MatrixXd::Random(1, output);
-//   // this->delta = 
-// }
-//
-// void Linear::setInput(Eigen::MatrixXd input) { this->input = input; }
-// void Linear::bindNextLayer(std::shared_ptr<Linear> layer) { this->nextLayer = layer; }
+
 Eigen::MatrixXd Linear::getResult() {
   return activation->function(linearOutput);
 }
@@ -69,18 +62,6 @@ void Linear::findWeights(double rate) {
   weights -=  rate * (input.transpose() * delta);
 }
 
-//=======================
-// void Linear::forward() {
-//   Eigen::MatrixXd linearOuput = (*input.lock()) * weights;
-//   if (bias) { linearOuput += biases.replicate((*input.lock()).rows(), 1); }
-//   std::cout << linearOuput << std::endl;
-//   this->output =
-//     std::make_shared<Eigen::MatrixXd>(
-//       activation->function(linearOuput)
-//     );
-// }
-//=======================
-
 void Linear::forward() {
   this->linearOutput = input * weights;
   if (bias) { this->linearOutput += biases.replicate(this->linearOutput.rows(), 1); }
@@ -101,24 +82,10 @@ void Linear::forward(Eigen::MatrixXd input) {
     );
   }
 }
-
-// =====================================
-// template<class Archive>
-// void Linear::serialize(Archive & ar, const unsigned int version) {
-  // ar & input;
-  // ar & linearOutput;
-  // ar & weights;
-  // ar & biases;
-  // ar & delta;
-  // ar & bias;
-// }
-
-// Explicit instantiation for supported archive types:
-// template void Linear::serialize<boost::archive::text_oarchive>(boost::archive::text_oarchive&, unsigned int);
-// template void Linear::serialize<boost::archive::text_iarchive>(boost::archive::text_iarchive&, unsigned int);
-// =======================================
+// end Linear
 
 
+// Sequential
 Sequential::Sequential() {};
 Sequential::Sequential(const std::vector<std::shared_ptr<Layer>> & layers) {
   this->layers = layers;
@@ -161,5 +128,6 @@ void Sequential::findWeights(double rate) {
 Eigen::MatrixXd Sequential::getResult() {
   return (*(layers.end() - 1))->getResult();
 }
+// end Sequential
 
 } // Layers end

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Eigen/Dense>
-#include <cstddef>
 
 #include <memory>
 
@@ -11,11 +10,12 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/base_object.hpp>
-#include <boost/make_shared.hpp>
 #include <boost/serialization/nvp.hpp>
-
 #include <boost/serialization/vector.hpp>
+#include <boost/make_shared.hpp>
+
 #include <vector>
+
 
 namespace boost {
 namespace serialization {

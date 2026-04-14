@@ -1,25 +1,24 @@
 
-#include "activation.h"
 #include <boost/serialization/export.hpp>
 
-// Register the derived class for polymorphic serialization
+#include "activation.h"
+
+
 BOOST_CLASS_EXPORT(Activations::Sigmoid)
 
 namespace Activations {
 
-// #Activation
+// Activation -- base class
 std::shared_ptr<Activation> 
 Activation::create() { return std::make_shared<Activation>(); };
 Eigen::MatrixXd
 Activation::function(Eigen::MatrixXd X) const { return X; };
 Eigen::MatrixXd
 Activation::gradient(Eigen::MatrixXd X) const { return X; };
-// template<class Archive>
-// void Activation::serialize(Archive & ar, const unsigned int version) {};
-// #Activation end
+// end Activation -- base class
 
 
-// #Sigmoid
+// Sigmoid
 std::shared_ptr<Sigmoid>
 Sigmoid::create() { return std::make_shared<Sigmoid>(); };
 
@@ -38,8 +37,6 @@ Sigmoid::gradient(Eigen::MatrixXd X) const {
   });
   return tmp_output;
 };
-// #Sigmoid end
+// end Sigmoid
 
-
-
-}; // end Activations
+}; // namespace Activations
