@@ -11,20 +11,20 @@ set(CMAKE_CXX_STANDARD 23)
 # при модифікації CMakeLists.txt
 set(CMAKE_SUPPRESS_REGENERATION true)
 
-# Знайти бібліотеку Eigen3 у системі
+# Знайти бібліотекі у системі
 find_package (Eigen3 REQUIRED NO_MODULE)
 find_package(Boost REQUIRED COMPONENTS serialization)
 find_package(GTest)
 
+# включити CTest
 include(CTest)
 
 add_subdirectory(apps)
 add_subdirectory(src)
 
+# Тести
 option(BUILD_TESTS "Build the tests" ON)
-
 if(BUILD_TESTS)
-  # Add test-related targets here
   enable_testing()
   add_subdirectory(tests)
 endif()
