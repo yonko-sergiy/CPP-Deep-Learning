@@ -9,9 +9,9 @@ tests
 target_link_libraries(
 tests
 PRIVATE
-  myml
+  NN
   gtest
-  # Eigen3::Eigen
+  Eigen3::Eigen
 )
 
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR})

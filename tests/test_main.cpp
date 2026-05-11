@@ -1,9 +1,29 @@
-#include <vector>
 
 #include <cmath>
+#include <gtest/gtest.h>
 
-#include "layer.h"
-#include "activation.h"
+#include "nn/layer.h"
+#include "nn/activation.h"
+#include <iostream>
+
+
+// Tests factorial of 0.
+TEST(FactorialTest, HandlesZeroInput) {
+  EXPECT_EQ(1, 1);
+}
+
+TEST(FactorialTest1, HandlesOneInput) {
+  EXPECT_EQ(1, 1);
+}
+
+TEST(Other, otr) {
+  EXPECT_EQ(3, 3);
+}
+
+TEST(Other1, otr2) {
+  EXPECT_EQ(3, 3);
+}
+
 
 
 // #include "nn.hpp"
@@ -19,15 +39,18 @@
 // auto my_layer = CreateLayer(SigmoidLayer, 3, 3, true) {
 
 int main (int argc, char *argv[]) {
-  std::cout << "test" << std::endl;
-
-  auto a = Activations::Activation::create();
-  a = Activations::Sigmoid::create();
-
-  auto my_layer = Layers::Linear(3, 4, a, false);
-  auto my_layer2 = Layers::Linear::create(4, 2, a, false);
-  auto my_layer3 = Layers::Linear::create(2, 3, a, false);
-
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+  // std::cout << "####test#####" << std::endl;
+  //
+  // auto a = Activations::Activation::create();
+  // a = Activations::Sigmoid::create();
+  //
+  // auto my_layer = Layers::Linear(3, 4, a, false);
+  // auto my_layer2 = Layers::Linear::create(4, 2, a, false);
+  // auto my_layer3 = Layers::Linear::create(2, 3, a, false);
+  // std::cout << "####post test#####" << std::endl;
+  //
 
   // auto my_layer = Layers::Linear(4096, 2048, a, true);
   // auto my_layer2 = Layers::Linear::create(2048, 512, a, true);
