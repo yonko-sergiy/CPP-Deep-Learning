@@ -98,15 +98,15 @@ int main (int argc, char *argv[]) {
     model.backward(model.getResult() - y_targ_train);
     model.findBiases(rate);
 
-     model.forward(x_input_train);
-     model.backward(model.getResult() - y_targ_train);
-     model.findWeights(rate);
+    model.forward(x_input_train);
+    model.backward(model.getResult() - y_targ_train);
+    model.findWeights(rate);
 
-     if (i % 500 == 0) {
-       model.forward(x_input_test);
-       loss = mae->function(model.getResult(), y_targ_test);
-       std::cout << "Epoch: " << i << "/5000\t\tLoss: " << loss << std::endl;
-     }
+    if (i % 500 == 0) {
+      model.forward(x_input_test);
+      loss = mae->function(model.getResult(), y_targ_test);
+      std::cout << "Epoch: " << i << "/5000\t\tLoss: " << loss << std::endl;
+    }
   }
 
   // Saving model
