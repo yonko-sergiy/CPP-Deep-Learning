@@ -193,8 +193,6 @@ TitanicDataset::TitanicDataset(std::string filename = "") {
       dataset_tests(i/5, 8) = (double)EmbarkedC[i];
     }
   }
-
-
 };
 
 TitanicDataset::~TitanicDataset() {}
@@ -249,11 +247,12 @@ TitanicModel::TitanicModel(std::string modelPath = "", std::string datasetPath =
     if (!ifs.is_open()) {
       std::cout << "Creating new model..." << std::endl;
       auto sigmoid = Activations::Sigmoid::create();
+      auto gaussian = Activations::Gaussian::create();
       model = Layers::Sequential({
-        Layers::Linear::create(9, 18, sigmoid, true),
-        Layers::Linear::create(18, 9, sigmoid, true),
-        Layers::Linear::create(9, 9, sigmoid, true),
-        Layers::Linear::create(9, 1, sigmoid, true)
+        Layers::Linear::create(9, 12, gaussian, true),
+        Layers::Linear::create(12, 9, gaussian, true),
+        Layers::Linear::create(9, 6, gaussian, true),
+        Layers::Linear::create(6, 1, gaussian, true)
       });
       std::cout << "Model is created!" << std::endl;
     }
@@ -334,10 +333,13 @@ void TitanicModel::tests(int batchSize = 16) {
              result.cols();
   Eigen::MatrixXd table(rows, cols);
   table << batchDatasetTests, batchTargetsTests, result;
+  // table = table.unaryExpr([](double v) {
+  //     return std::round(v * 100.0) / 100.0;
+  // });
 
 
   std::string table_cols = "|";
-  std::string table_headers = "|Pclass   |gender   |age      |SibSp    |Parch    |Fare     |EmbarkedQ|EmbarkedQ|EmbarkedQ|Survied  |Chance   |";
+  std::string table_headers = "|Pclass   |gender   |age      |SibSp    |Parch    |Fare     |EmbarkedQ|EmbarkedS|EmbarkedC|Survied  |Chance   |";
   for (size_t i = 0; i < 11; i++) {
     table_cols += "---------|";
   }
@@ -374,22 +376,35 @@ TitanicModel::~TitanicModel() {
 
 int main(int argc, char *argv[]) {
 
-  TitanicModel   titanicModel = TitanicModel("../models/titanic.dat");
+  std::string modelPath = "../models/titanicGaussian.dat";
 
-
-  titanicModel.train(128,
-                     100,
-                     1000,
-                     0.00001);
-  titanicModel.tests();
+  TitanicModel   titanicModel = TitanicModel(modelPath);
 
   char flag = 'n';
+
+  titanicModel.tests(32);
+
+  std::cout << "Do you want to train model? (y/n): ";
+  std::cin >> flag;
+
+  if (flag == 'y') {
+    for (size_t i = 0; i < 8; i++) {
+      titanicModel.train(128,
+                        100,
+                        1000,
+                        0.000001);
+      titanicModel.tests();
+    }
+    flag = 'n';
+  } else {
+    return 0;
+  }
 
   std::cout << "Do you want to save model? (y/n): ";
   std::cin >> flag;
 
   if (flag == 'y') {
-    titanicModel.save("../models/titanic.dat");
+    titanicModel.save(modelPath);
   }
 
   return 0;
